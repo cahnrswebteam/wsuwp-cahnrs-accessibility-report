@@ -35,6 +35,9 @@ class CAHNRSEmailCronSchedule {
         if ($totalErrors > 0 || $totalWarnings > 0 || $totalAlerts > 0) {
             $subject = 'Accessibility Report';
             $message = $report_content;
+            $current_date = date('m-d-Y g:i:s A  ');
+            update_option('last_sent_date', $current_date);
+            
             wp_mail($report_email, $subject, $message);
         }
 

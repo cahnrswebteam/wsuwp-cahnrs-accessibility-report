@@ -193,13 +193,16 @@ class CAHNRS_Accessibility_Report_Menu {
         update_option('report_email', $report_email);
 
         $new_email_frequency = isset($_POST['email_frequency']) ? $_POST['email_frequency'] : 'monthly';
-        update_option('email_frequency', $new_email_frequency);
 
         if($email_frequency != $new_email_frequency){
+            update_option('email_frequency', $new_email_frequency);
+            
             include 'class-cahnrs-accessibility-cron.php';
             $cahnrs_wsu_set_email_cron = new CAHNRSEmailCron();
             $cahnrs_wsu_set_email_cron->cahnrs_accessibility_set_frequency();
         }
+    
+        echo '<div class="updated notice"><p>Settings successfully saved!</p></div>';
     }
     
     // Creates settings form
@@ -209,10 +212,10 @@ class CAHNRS_Accessibility_Report_Menu {
         $email_frequency = get_option('email_frequency', 'none');
 
     
-        echo '<div class="wrap"><h2>Settings</h2>';
+        echo '<div class="wrap" style="background: white;padding: 20px;border-left: 3px solid #ca1237;"><h2>Settings</h2>';
         echo '<form method="post" action="">';
     
-        echo '<br><label>Select Accessibility Issue Types:</label><br>';
+        echo '<div><label>Select the issues you would like to see in the report:</label></div>';
     
         $issue_types = array(
             'errors' => 'Errors',
@@ -238,27 +241,11 @@ class CAHNRS_Accessibility_Report_Menu {
         echo '<br><input type="submit" name="submit" class="button-primary" value="Save Settings">';
         echo '</form>';
 
+        $last_sent_date = get_option('last_sent_date', '');
+        echo "<p>Report last sent on $last_sent_date";
+
         echo '</div>';
 
-        $email_frequency = get_option('email_frequency', 'none');
-        $current_date = date('m-d-Y');
-        $report_email = get_option('report_email', '');
-        $last_sent_date = get_option('last_sent_date', '');
-
-        update_option('last_sent_date', $current_date);
-
-        if (isset($_POST['send_report'])) {
-            $report_email = get_option('report_email', '');
-            if (!empty($report_email)) {
-                $this->cahnrs_accessibility_report_email($report_email);
-                echo '<div class="updated notice"><p>Report sent successfully!</p></div>';
-                update_option('last_sent_date', $current_date);
-            } else {
-                echo '<div class="error notice"><p>No report email address specified.</p></div>';
-            }
-        }
-
-        echo "<p>Report last sent on $last_sent_date";
     }
 }
 
