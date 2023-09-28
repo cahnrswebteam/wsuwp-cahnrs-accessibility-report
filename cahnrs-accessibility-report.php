@@ -17,9 +17,9 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 //Checks to see if WSUWP Gutenberg plugin is activated. 
-register_activation_hook( __FILE__, 'wsuwp_plugin_gutenberg_plugin_check' );
+register_activation_hook( __FILE__, 'wsuwp_plugin_accessibility_plugin_check' );
 
-function wsuwp_plugin_gutenberg_plugin_check(){
+function wsuwp_plugin_accessibility_plugin_check(){
     if ( ! is_plugin_active( 'wsuwp-plugin-gutenberg-accesssibility/wsuwp-plugin-gutenberg-accessibility.php' ) and current_user_can( 'activate_plugins' ) ) {
       wp_die('Sorry, this plugin requires WSUWP Gutenberg Accessibility to be activated. Please activate plugin that plugin first before activating this one. <br><a href="' . admin_url( 'plugins.php' ) . '">&laquo; Return to Plugins</a> <style>div#query-monitor{display:none;}');
     }
