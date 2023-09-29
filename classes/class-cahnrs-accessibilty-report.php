@@ -242,7 +242,10 @@ class CAHNRS_Accessibility_Report_Menu {
         echo '</form>';
 
         $last_sent_date = get_option('last_sent_date', '');
+        if(!empty($last_sent_date)){
         echo "<p>Report last sent on $last_sent_date";
+        }
+        
 
         echo '</div>';
 
