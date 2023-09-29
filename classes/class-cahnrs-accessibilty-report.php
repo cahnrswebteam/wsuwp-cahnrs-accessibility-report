@@ -212,7 +212,7 @@ class CAHNRS_Accessibility_Report_Menu {
         $email_frequency = get_option('email_frequency', 'none');
 
     
-        echo '<div class="wrap" style="background: white;padding: 20px;border-left: 3px solid #ca1237;"><h2>Settings</h2>';
+        echo '<div class="wrap" style="background: white;padding: 20px;"><h2>Settings</h2>';
         echo '<form method="post" action="">';
     
         echo '<div><label>Select the issues you would like to see in the report:</label></div>';
@@ -243,7 +243,7 @@ class CAHNRS_Accessibility_Report_Menu {
 
         $last_sent_date = get_option('last_sent_date', '');
         if(!empty($last_sent_date)){
-        echo "<p>Report last sent on $last_sent_date";
+            echo "<p>Report last sent on $last_sent_date";
         }
         
 

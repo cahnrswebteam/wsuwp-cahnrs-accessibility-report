@@ -5,7 +5,7 @@
  * Plugin Name:       WSUWP Accessibilty Report
  * Plugin URI:        https://cahnrs.wsu.edu/
  * Description:       Creates a page in dashboard that shows all accessibility issues on one page.
- * Version:           1.4.0
+ * Version:           1.4.1
  * Author:            CAHNRS Communications
  * Author URI:        https://cahnrs.wsu.edu/
  * Text Domain:       cahnrs-accessibility report
@@ -29,7 +29,7 @@ function wsuwp_plugin_accessibility_plugin_check(){
 require_once( WP_PLUGIN_DIR . '/wsuwp-plugin-gutenberg/includes/plugin.php');
 
 //Define the version of this CAHNRS Gutenberg plugin
-define( 'CAHNRSACCESSIBILITYREPORTVERSION', '1.4.0' );
+define( 'CAHNRSACCESSIBILITYREPORTVERSION', '1.4.1' );
 
 // Gets CAHNRS Gutenberg plugin URL.
 function _get_cahnrs_accessibility_report_plugin_url() {
