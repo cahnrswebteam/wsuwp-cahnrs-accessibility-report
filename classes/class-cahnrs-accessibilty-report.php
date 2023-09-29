@@ -140,7 +140,7 @@ class CAHNRS_Accessibility_Report_Menu {
     
         $selected_issue_types = get_option('selected_issue_types', array());
         
-        echo "<h3>Total accessibility issues</h3>";
+        echo "<h3>Total pages/posts with accessibility issues</h3>";
         
         if(($this->total_errors == 0) && ($this->total_alerts == 0) && ($this->total_warnings == 0)){
             echo "<p>There were no accessibility issues found on your site.</p>";
