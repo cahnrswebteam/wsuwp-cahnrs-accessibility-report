@@ -29,20 +29,20 @@ class CAHNRSAccessibilityQuery {
 
                 if (!empty($report->errors) || !empty($report->alerts) || !empty($report->warnings)) {
 
-                    if(in_array('errors', $selected_issue_types) && !empty($report->errors)){
+                    if(!empty($report->errors)){
                         foreach ($report->errors as $error) {
                             $this->total_errors++;
                         }
                     }
                     
-                    if(in_array('alerts', $selected_issue_types) && !empty($report->alerts)){
+                    if(!empty($report->alerts)){
                         foreach ($report->alerts as $alert) {
                             $this->total_alerts++;
                         }
                     } 
                     
 
-                    if(in_array('warnings', $selected_issue_types) && !empty($report->warnings)){
+                    if( !empty($report->warnings)){
                         foreach ($report->warnings as $warning) {
                             $this->total_warnings++;
                         }
