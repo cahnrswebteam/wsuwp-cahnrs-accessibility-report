@@ -62,10 +62,11 @@ class CAHNRS_Accessibility_Report_Menu {
 
 
     // Creates report of all accessibility issues on the selected post types
-    private function cahnrs_generate_post_type_report($selected_post_type, $selected_issue_types) {
+    public function cahnrs_generate_post_type_report($selected_post_type, $selected_issue_types) {
         $args = array(
             'post_type' => $selected_post_type,
             'posts_per_page' => -1,
+            'post_status' => 'publish'
         );
 
         $query = new \WP_Query($args);

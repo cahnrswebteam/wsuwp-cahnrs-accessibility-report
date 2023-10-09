@@ -13,6 +13,7 @@ class CAHNRSAccessibilityQuery {
         $args = array(
             'post_type' => $selected_post_types,
             'posts_per_page' => -1, 
+            'post_status' => 'publish'
         );
 
         $query = new \WP_Query($args);
