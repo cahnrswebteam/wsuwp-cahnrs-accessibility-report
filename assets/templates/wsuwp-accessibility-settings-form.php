@@ -40,9 +40,9 @@
     <div class="wsuwp-accessibility-settings-form__email-frequency">
         <label for="email_frequency">Select Email Frequency:</label>
         <select name="email_frequency">
-            <option value="none" <?php selected($email_frequency, 'none', false); ?> >None</option>
-            <option value="weekly" <?php selected($email_frequency, 'weekly', false)?> >Weekly</option>
-            <option value="monthly" <?php selected($email_frequency, 'monthly', false)?> >Monthly</option>
+            <option value="none" <?php echo selected($email_frequency, 'none', false); ?> >None</option>
+            <option value="weekly" <?php echo selected($email_frequency, 'weekly', false)?> >Weekly</option>
+            <option value="monthly" <?php echo selected($email_frequency, 'monthly', false)?> >Monthly</option>
         </select>
     </div>
     
