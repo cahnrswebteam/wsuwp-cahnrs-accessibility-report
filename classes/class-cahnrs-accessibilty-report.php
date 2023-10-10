@@ -206,9 +206,6 @@ class CAHNRS_Accessibility_Report_Menu {
 
         $new_email_frequency = isset($_POST['email_frequency']) ? $_POST['email_frequency'] : 'monthly';
 
-        error_log($email_frequency);
-        error_log($new_email_frequency);
-
         if($email_frequency != $new_email_frequency){
             
             
