@@ -137,15 +137,15 @@ class CAHNRS_Accessibility_Report_Menu {
 
     //Creates sidebar to let user know total amount of issues on their site. 
     private function cahnrs_generate_summary_sidebar() {
-        echo '<div style="flex: 1 15%;background: white;padding: 20px 20px 110px;border-top: #ca1237 6px solid;position: relative;top: 120px;">';
-    
         $selected_issue_types = get_option('selected_issue_types', array());
+
+        echo '<div style="flex: 1 15%;background: white;padding: 20px 20px 110px;border-top: #ca1237 6px solid;position: relative;top: 120px;">';
         
         echo "<h3>Total pages/posts with accessibility issues</h3>";
-        
-        if(($this->total_errors == 0) && ($this->total_alerts == 0) && ($this->total_warnings == 0)){
-            echo "<p>There were no accessibility issues found on your site.</p>";
-        }else{
+        if(
+        (in_array('errors', $selected_issue_types) && ( $this->total_errors > 0) ) || 
+        (in_array('alerts', $selected_issue_types) && ( $this->total_alerts > 0) ) || 
+        (in_array('warnings', $selected_issue_types) && ( $this->total_warnings > 0) )){
             echo "<p>To change the accessibility issue/s that show up, please go to the <a href='wp-admin/admin.php?page=cahnrs-settings-page'>settings page</a>.</p>";
 
             if(in_array('errors', $selected_issue_types)){
@@ -159,11 +159,16 @@ class CAHNRS_Accessibility_Report_Menu {
             if(in_array('warnings', $selected_issue_types)){
                 echo "<p style='margin:0;'><span style='font-weight:bold;font-size: 21px;'>$this->total_warnings </span> Warnings </p>";
             }
+        }elseif(
+            !in_array('errors', $selected_issue_types) && ( $this->total_errors > 0)  || 
+            !in_array('alerts', $selected_issue_types) && ( $this->total_alerts > 0 )  || 
+            !in_array('warnings', $selected_issue_types) && ( $this->total_warnings > 0 )){
+            echo "<p style='margin:0;'>Your website currently has accessibility issues but the issue type is not currently selected</p>";
+        }else{
+            echo "<p>There were no accessibility issues found on your site.</p>";
         }
-    
         echo '</div>';
     }
-
 
     //Settings Page
     public function cahnrs_create_sub_page() {
@@ -193,62 +198,50 @@ class CAHNRS_Accessibility_Report_Menu {
         $report_email = isset($_POST['report_email']) ? sanitize_email($_POST['report_email']) : '';
         update_option('report_email', $report_email);
 
+        $selected_recipients = isset($_POST['selected_recipients']) ? $_POST['selected_recipients'] : array();
+        update_option('selected_recipients', $selected_recipients);
+
+        $custom_email_content = isset($_POST['custom_email_content']) ? $_POST['custom_email_content'] : '';
+        update_option('custom_email_content', $custom_email_content);
+
         $new_email_frequency = isset($_POST['email_frequency']) ? $_POST['email_frequency'] : 'monthly';
 
         if($email_frequency != $new_email_frequency){
-            update_option('email_frequency', $new_email_frequency);
             
-            include 'class-cahnrs-accessibility-cron.php';
+            
+            include 'class-cahnrs-accessibility-email-cron.php';
             $cahnrs_wsu_set_email_cron = new CAHNRSEmailCron();
             $cahnrs_wsu_set_email_cron->cahnrs_accessibility_set_frequency();
+
+            update_option('email_frequency', $new_email_frequency);
         }
     
         echo '<div class="updated notice"><p>Settings successfully saved!</p></div>';
     }
     
     // Creates settings form
-    private function displaySettingsForm($selected_issue_types, $report_email, $email_frequency) {
+    private function displaySettingsForm($selected_issue_types, $selected_recipients, $email_frequency) {
         $selected_issue_types = get_option('selected_issue_types', array());
         $report_email = get_option('report_email', '');
         $email_frequency = get_option('email_frequency', 'none');
+        $custom_email_content = get_option('custom_email_content', '');
+        $default_email_content = CAHNRSEmailCronSchedule::cahnrs_generate_report_content();
 
-    
-        echo '<div class="wrap" style="background: white;padding: 20px;"><h2>Settings</h2>';
-        echo '<form method="post" action="">';
-    
-        echo '<div><label>Select the issues you would like to see in the report:</label></div>';
-    
         $issue_types = array(
             'errors' => 'Errors',
             'alerts' => 'Alerts',
             'warnings' => 'Warnings',
         );
-    
-        foreach ($issue_types as $issue_key => $issue_label) {
-            $checked = in_array($issue_key, $selected_issue_types) ? 'checked' : '';
-            echo '<input type="checkbox" name="issue_types[]" value="' . $issue_key . '" ' . $checked . '> ' . $issue_label . '<br>';
-        }
-    
-        echo '<br><label for="report_email">Enter Report Email Address:</label><br>';
-        echo '<input type="text" name="report_email" id="report_email" value="' . esc_attr($report_email) . '" /><br>';
-    
-        
-        echo '<br><label for="email_frequency">Select Email Frequency:</label><br>';
-        echo '<select name="email_frequency">';
-        echo '<option value="none" ' . selected($email_frequency, 'none', false) . '>None</option>';
-        echo '<option value="weekly" ' . selected($email_frequency, 'weekly', false) . '>Weekly</option>';
-        echo '<option value="monthly" ' . selected($email_frequency, 'monthly', false) . '>Monthly</option>';
-        echo '</select><br>';
-        echo '<br><input type="submit" name="submit" class="button-primary" value="Save Settings">';
-        echo '</form>';
 
-        $last_sent_date = get_option('last_sent_date', '');
-        if(!empty($last_sent_date)){
-            echo "<p>Report last sent on $last_sent_date";
-        }
-        
+        $user_query = new \WP_User_Query(array(
+            'role__in' => array('administrator', 'editor')
+        ));
 
-        echo '</div>';
+        $users = $user_query->get_results();
+
+        $selected_recipients = get_option('selected_recipients', array());
+
+        include CAHNRSAccessibilityReportPlugin::get('dir') . '/assets/templates/wsuwp-accessibility-settings-form.php';
 
     }
 }
