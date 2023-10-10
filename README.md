@@ -12,3 +12,4 @@ This plugin generates a report of all accessibility issues on one page.
 - Creates an admin dashboard widget. 
 ## To do
 - Show history on how accessibility issues have improved over time.
+- Implement other post types.
