@@ -25,6 +25,7 @@ class CAHNRSAccessibilityReportPlugin {
 		require_once __DIR__ . '/scripts.php';
         require_once __DIR__ . '/../classes/class-cahnrs-accessibilty-report.php';
 		require_once __DIR__ . '/../classes/class-cahnrs-cron-schedules.php';
+		require_once __DIR__ . '/../classes/class-cahnrs-accessibility-query.php';
 		require_once __DIR__ . '/../classes/class-cahnrs-accessibility-dashboard-widget.php';
 	}
 

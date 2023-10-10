@@ -7,5 +7,3 @@ This plugin generates a report of all accessibility issues on one page.
 - Ability to email user that there are issues on their website
 	- Selecting how frequent the user should be emailed (none, weekly, monthly)
 ## To do
-- Allow user to create their own message that will be sent to site user
-- Allow multiple email address to be submitted. 
