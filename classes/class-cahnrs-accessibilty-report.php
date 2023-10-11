@@ -207,13 +207,12 @@ class CAHNRS_Accessibility_Report_Menu {
         $new_email_frequency = isset($_POST['email_frequency']) ? $_POST['email_frequency'] : 'monthly';
 
         if($email_frequency != $new_email_frequency){
-            
+            update_option('email_frequency', $new_email_frequency);
             
             include 'class-cahnrs-accessibility-email-cron.php';
             $cahnrs_wsu_set_email_cron = new CAHNRSEmailCron();
             $cahnrs_wsu_set_email_cron->cahnrs_accessibility_set_frequency();
 
-            update_option('email_frequency', $new_email_frequency);
         }
     
         echo '<div class="updated notice"><p>Settings successfully saved!</p></div>';
