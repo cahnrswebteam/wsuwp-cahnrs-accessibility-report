@@ -5,6 +5,7 @@ class CAHNRSEmailCronSchedule {
     public function __construct() {
 		add_filter('cron_schedules', array( $this, 'cahnrs_custom_cron_schedule'));
         add_action('cahnrs_accessibility_email_cron', array($this, 'cahnrs_accessibility_report_email_cron'));
+        
 	}    
 
     //Create new cron schedule of 1 month
@@ -29,16 +30,19 @@ class CAHNRSEmailCronSchedule {
         $total_warnings = $cahnrs_accessibility_query['total_warnings'];
             
         $report_content = $this->cahnrs_generate_report_content(); 
+        $report_content = wpautop($report_content);
         $report_email = get_option('selected_recipients', '');
         $report_email = implode(',', $report_email);
-        
+
+        $headers[] = 'Content-Type: text/html; charset=UTF-8';
+
         if ($total_errors > 0 || $total_alerts > 0 || $total_warnings > 0) {
             $subject = 'Accessibility Report';
             $message = $report_content;
             $current_date = current_datetime()->format('m-d-Y H:i:s A');
             update_option('last_sent_date', $current_date);
             
-            wp_mail($report_email, $subject, $message);
+            wp_mail($report_email, $subject, $message, $headers);
         }
         
     }

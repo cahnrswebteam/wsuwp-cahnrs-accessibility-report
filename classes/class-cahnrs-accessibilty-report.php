@@ -208,6 +208,9 @@ class CAHNRS_Accessibility_Report_Menu {
             ),
             'br' => array(),
             'em' => array(),
+            'ul' => array(),
+            'li' => array(),
+            'p' => array(),
         );
 
         $clean_email_content = wp_kses($_POST['custom_email_content'], $allowed_tags);
