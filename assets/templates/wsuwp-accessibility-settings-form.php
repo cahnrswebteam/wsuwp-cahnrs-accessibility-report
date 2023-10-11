@@ -53,7 +53,7 @@
         <div class="wsuwp-accessibility-settings-form__custom-message-container">
 
             <div class="wsuwp-accessibility-settings-form__custom-message-container_left">
-                <?php wp_editor($custom_email_content, 'custom_email_content', array('textarea_name' => 'custom_email_content')); ?>
+                <?php wp_editor($custom_email_content, 'custom_email_content', array('textarea_name' => 'custom_email_content','media_buttons' => false,)); ?>
             </div>
 
             <div class="wsuwp-accessibility-settings-form__custom-message-container_right">
