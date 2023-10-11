@@ -201,8 +201,19 @@ class CAHNRS_Accessibility_Report_Menu {
         $selected_recipients = isset($_POST['selected_recipients']) ? $_POST['selected_recipients'] : array();
         update_option('selected_recipients', $selected_recipients);
 
+        $allowed_tags = array(
+            'a' => array(
+                'href' => array(),
+                'title' => array()
+            ),
+            'br' => array(),
+            'em' => array(),
+        );
+
+        $clean_email_content = wp_kses($_POST['custom_email_content'], $allowed_tags);
+
         $custom_email_content = isset($_POST['custom_email_content']) ? $_POST['custom_email_content'] : '';
-        update_option('custom_email_content', $custom_email_content);
+        update_option('custom_email_content', $clean_email_content);
 
         $new_email_frequency = isset($_POST['email_frequency']) ? $_POST['email_frequency'] : 'monthly';
 
@@ -225,6 +236,8 @@ class CAHNRS_Accessibility_Report_Menu {
         $email_frequency = get_option('email_frequency', 'none');
         $custom_email_content = get_option('custom_email_content', '');
         $default_email_content = CAHNRSEmailCronSchedule::cahnrs_generate_report_content();
+        $cahnrs_site_title = get_bloginfo('name');
+        $cahnrs_admin_report_page = get_site_url() . '/wp-admin/admin.php?page=cahnrs-accessibility';
 
         $issue_types = array(
             'errors' => 'Errors',

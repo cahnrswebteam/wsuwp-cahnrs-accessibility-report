@@ -47,7 +47,8 @@ class CAHNRSEmailCronSchedule {
     public static function cahnrs_generate_report_content() {
 
         $content = '';
-        
+        $custom_email_content = get_option('custom_email_content', '');
+
         if (!empty($custom_email_content)) {
             $content = $custom_email_content; 
 
@@ -56,7 +57,6 @@ class CAHNRSEmailCronSchedule {
             $cahnrs_admin_report_page = get_site_url() . '/wp-admin/admin.php?page=cahnrs-accessibility';
 
             $cahnrs_site_title = get_bloginfo('name');
-            $custom_email_content = get_option('custom_email_content', '');
 
             ob_start();
             include CAHNRSAccessibilityReportPlugin::get('dir') . 'assets/templates/wsuwp-accessibility-default-email-content.php';

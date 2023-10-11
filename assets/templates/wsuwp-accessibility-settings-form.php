@@ -1,3 +1,5 @@
+<?php namespace CAHNRS\Plugin\AccessibilityReport; ?>
+
 <div class="wrap wsuwp-accessibility-settings-form">
     <?php 
         $last_sent_date = get_option('last_sent_date', '');
@@ -58,7 +60,7 @@
 
             <div class="wsuwp-accessibility-settings-form__custom-message-container_right">
                 <h3>Default Email Message</h3>
-                <?php echo $default_email_content; ?>
+                <?php include CAHNRSAccessibilityReportPlugin::get('dir') . '/assets/templates/wsuwp-accessibility-default-email-content.php'; ?>
             </div>
 
         </div>
