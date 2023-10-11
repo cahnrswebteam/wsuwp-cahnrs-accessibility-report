@@ -7,7 +7,7 @@ This plugin generates a report of all accessibility issues on one page.
 - Ability to email user that there are issues on their website.
 	- Selecting how frequent the user should be emailed (none, weekly, monthly)
 	- Gives user the capablity of keeping the default email message or entering their own. 
-		- To change the default message, change the content in the ```cahnrs_generate_report_content()```
+		- To change the default message, change the content in the ```templates/wsuwp-accessibility-default-email-content.php```
 	- Users that can be emailed is pulled from the the registered users on the website (administrators and editors only).
 - Creates an admin dashboard widget. 
 ## To do
